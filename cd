@@ -1,0 +1,20 @@
+Uso: dotnet tool install [opciones] <PACKAGE_ID>
+
+Argumentos:
+  <PACKAGE_ID>   El id. del paquete de NuGet de la herramienta que se instalar .
+
+Opciones:
+  -g, --global              Instalar la herramienta para el usuario actual.
+  --local                   Instalar la herramienta y agregar al manifiesto de la herramienta local (predeterminado).
+  --tool-path <PATH>        El directorio donde se instalar  la herramienta. Si no existe, se crear  el directorio.
+  --version <VERSION>       La versi¢n del paquete de herramientas para instalar.
+  --configfile <FILE>       Archivo de configuraci¢n de NuGet que debe usarse.
+  --tool-manifest <PATH>    Ruta de acceso al archivo de manifiesto.
+  --add-source <SOURCE>     Agrega un origen de paquetes de NuGet para utilizar durante la instalaci¢n.
+  --framework <FRAMEWORK>   La plataforma de destino para la que se instala la herramienta.
+  --disable-parallel        Evite la restauraci¢n de varios proyectos en paralelo.
+  --ignore-failed-sources   Indica que los errores de origen de paquete se traten como advertencias.
+  --no-cache                Indica que no se almacenen en cach‚ los paquetes ni las solicitudes HTTP.
+  --interactive             Permite que el comando se detenga y espere la entrada o acci¢n del usuario (por ejemplo, para autenticarse).
+  -h, --help                Muestra ayuda de la l¡nea de comandos.
+  -v, --verbosity <LEVEL>   Establece el nivel de detalle de MSBuild. Los valores permitidos son q[uiet], m[inimal], n[ormal], d[etailed] y diag[nostic].
