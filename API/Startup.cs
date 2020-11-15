@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using API.Data;
+using API.Extensions;
+using API.Interfaces;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -38,6 +44,9 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+/*
+//4.41{
+    services.AddScoped<ITokenService, TokenService>();
 
 //2.12{
             services.AddDbContext<DataContext>(options =>{
@@ -46,7 +55,10 @@ namespace API
           
             });
 
-//}2.12
+//}2.12  */
+//4.45{
+services.AddApplicationServices(_config);
+      //}4.45
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +68,21 @@ namespace API
             //3.24{
             services.AddCors();
         //}3.24
+
+/*
+        //4.44{
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters=new TokenValidationParameters{
+                ValidateIssuerSigningKey=true,
+                IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
+                ValidateIssuer=false,
+                ValidateAudience=false
+            };
+        });
+        //}4.44    */
+        services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +104,10 @@ namespace API
 //3.28{
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 //}3.28
+
+       //4.44{  
+          app.UseAuthentication();
+         //}4.44
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
